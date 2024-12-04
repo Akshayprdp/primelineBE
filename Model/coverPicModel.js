@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
-const serviceSchema = new mongoose.Schema({
+const coverPicSchema = new mongoose.Schema({
     heading: {
         type: String,
         required: true
     },
-    title: {
+    subheading: {
         type: String,
         required: true
     },
-    image: {
+    coverPic: {
         type: String,
         required: true
     },
@@ -19,4 +19,4 @@ const serviceSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("Service", serviceSchema);
+module.exports = mongoose.model("CoverPic", coverPicSchema);

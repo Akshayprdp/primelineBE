@@ -1,20 +1,22 @@
 const express = require("express");
 const router = express.Router(); 
-const { addService, getAllServices, getServiceById } = require("../Controllers/serviceController");
+const {getAllBrandDetails,getBrandDetailsById,addBrandDetails} = require("../Controllers/BrandDetailsController");
+const {addCoverPic,getAllCoverPics} = require("../Controllers/coverPicController");
 const upload = require('../Middleware/Multer');
-const { addNewsroomEntry,getAllNewsrooms, getNewsroomById } = require("../Controllers/newsroomController");
 const { adminLogin } = require("../Controllers/adminController");
 
 // post
 router.post('/adminlogin', adminLogin);
-router.post('/addServices',upload.single('image'), addService);
-router.post('/addnews',upload.single('image'), addNewsroomEntry);
+router.post('/brand-details', upload.fields([{ name: 'logo', maxCount: 1 }, { name: 'images' }]), addBrandDetails);
+router.post('/cover-pics', upload.single('coverPic'), addCoverPic);
+
 
 // get
-router.get('/newsrooms', getAllNewsrooms);
-router.get('/newsrooms/:id', getNewsroomById);
-router.get('/services',getAllServices);
-router.get('/services/:id',getServiceById);
+router.get('/brand-details', getAllBrandDetails);
+router.get('/brand-details/:id', getBrandDetailsById);
+router.get('/cover-pics', getAllCoverPics);
+
+
 
 
 
