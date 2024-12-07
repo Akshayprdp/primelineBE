@@ -1,6 +1,7 @@
 const CoverPic = require('../Model/coverPicModel');
 const path = require('path');
 
+
 module.exports.addCoverPic = async (req, res) => {
   try {
     const { heading, subheading } = req.body;
