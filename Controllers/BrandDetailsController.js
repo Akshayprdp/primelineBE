@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 module.exports.addBrandDetails = async (req, res) => {
   try {
-    const { name, tagline, missionStatement, coreValues } = req.body;
+    const { name, tagline, missionStatement, coreValues, imageHeadings } = req.body;
 
     // Check if the logo file is provided
     if (!req.files || !req.files.logo || !req.files.images) {
@@ -14,6 +14,16 @@ module.exports.addBrandDetails = async (req, res) => {
     const logo = req.files.logo[0];
     const images = req.files.images;
 
+    // Check if exactly 6 images are provided
+    if (images.length !== 6) {
+      return res.status(400).json({ message: "Please provide exactly 6 images.", success: false });
+    }
+
+    // Check if exactly 6 image headings are provided
+    if (imageHeadings.length !== 6) {
+      return res.status(400).json({ message: "Please provide exactly 6 image headings.", success: false });
+    }
+
     // Create a new brand details entry
     const newBrandDetails = new BrandDetails({
       name,
@@ -21,7 +31,10 @@ module.exports.addBrandDetails = async (req, res) => {
       missionStatement,
       coreValues: coreValues.split(','), // Assuming coreValues are sent as a comma-separated string
       logo: `/uploads/${logo.filename}`, // Assuming multer is handling file uploads
-      images: images.map(image => `/uploads/${image.filename}`), // Assuming multer is handling file uploads
+      images: images.map((image, index) => ({
+        url: `/uploads/${image.filename}`,
+        heading: imageHeadings[index]
+      })),
     });
 
     // Save the new brand details entry to the database

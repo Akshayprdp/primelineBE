@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+const imageSchema = new mongoose.Schema({
+    url: {
+        type: String,
+        required: true
+    },
+    heading: {
+        type: String,
+        required: true
+    }
+});
+
 const brandDetailsSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -22,7 +33,7 @@ const brandDetailsSchema = new mongoose.Schema({
         required: true
     },
     images: {
-        type: [String],
+        type: [imageSchema],
         required: true
     },
     createdAt: {
